@@ -1,313 +1,322 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>HOTS.COM</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<!-- CRT OVERLAY (always on top) -->
-<div id="crt-overlay">
-  <div id="scanlines"></div>
-  <div id="noise-layer"></div>
-  <div id="vignette"></div>
-</div>
-<div id="glitch-flash" class="hidden"></div>
+  <!-- CRT OVERLAY (always on top) -->
+  <div id="crt-overlay">
+    <div id="scanlines"></div>
+    <div id="noise-layer"></div>
+    <div id="vignette"></div>
+  </div>
+  <div id="glitch-flash" class="hidden"></div>
 
-<!-- ══════════════════════════════
+  <!-- ══════════════════════════════
      SCREEN 1 — FAKE WINDOWS DESKTOP
 ══════════════════════════════ -->
-<div id="screen-desktop" class="screen active">
-  <div id="desktop-bg"></div>
-  <div id="desktop-icons">
-    <div class="desktop-icon" id="icon-browser" ondblclick="openBrowser()">
-      <div class="icon-img">🌐</div>
-      <span>Internet Explorer</span>
+  <div id="screen-desktop" class="screen active">
+    <div id="desktop-bg"></div>
+    <div id="desktop-icons">
+      <div class="desktop-icon" id="icon-browser" ondblclick="openBrowser()">
+        <div class="icon-img">
+          <img src="assets/internet.png" alt="Internet Explorer">
+        </div>
+        <span>Internet Explorer</span>
+      </div>
+      <div class="desktop-icon" id="icon-recycle">
+        <div class="icon-img">
+          <img src="assets/trash.png" alt="Recycle Bin">
+        </div>
+        <span>Recycle Bin</span>
+      </div>
+      <div class="desktop-icon" id="icon-docs">
+        <div class="icon-img">📁</div>
+        <span>My Documents</span>
+      </div>
     </div>
-    <div class="desktop-icon" id="icon-mycomputer">
-      <div class="icon-img">💻</div>
-      <span>My Computer</span>
-    </div>
-    <div class="desktop-icon" id="icon-recycle">
-      <div class="icon-img">🗑️</div>
-      <span>Recycle Bin</span>
-    </div>
-    <div class="desktop-icon" id="icon-docs">
-      <div class="icon-img">📁</div>
-      <span>My Documents</span>
+    <div id="desktop-hint">Double-click Internet Explorer to begin</div>
+    <div id="taskbar">
+      <div id="start-btn"><span>⊞</span> Start</div>
+      <div id="taskbar-items"></div>
+      <div id="taskbar-clock">12:04 AM</div>
     </div>
   </div>
-  <div id="desktop-hint">Double-click Internet Explorer to begin</div>
-  <div id="taskbar">
-    <div id="start-btn"><span>⊞</span> Start</div>
-    <div id="taskbar-items"></div>
-    <div id="taskbar-clock">12:04 AM</div>
-  </div>
-</div>
 
-<!-- ══════════════════════════════
+  <!-- ══════════════════════════════
      SCREEN 2 — BROWSER + DATING SITE
 ══════════════════════════════ -->
-<div id="screen-browser" class="screen">
-  <!-- Browser Chrome -->
-  <div id="browser-chrome">
-    <div id="browser-titlebar">
-      <span id="browser-title">HOTS.COM — Microsoft Internet Explorer</span>
-      <div id="browser-winbtns">
-        <button class="wbtn wmin">_</button>
-        <button class="wbtn wmax">□</button>
-        <button class="wbtn wclose" onclick="closeBrowser()">✕</button>
-      </div>
-    </div>
-    <div id="browser-toolbar">
-      <div id="nav-btns">
-        <button class="nav-btn">◄</button>
-        <button class="nav-btn">►</button>
-        <button class="nav-btn">✕</button>
-        <button class="nav-btn">⟳</button>
-      </div>
-      <div id="address-bar">
-        <span id="address-label">Address</span>
-        <input id="address-input" type="text" value="http://www.hots.com/index.html" readonly/>
-        <button id="go-btn">Go</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Browser Content -->
-  <div id="browser-content">
-
-    <!-- PAGE A: Landing -->
-    <div id="page-landing" class="browser-page active-page">
-      <div id="landing-header">
-        <div id="landing-logo">
-          <span class="logo-hots">HOTS.COM</span><br/>
-          <span class="logo-dating">DATING</span>
+  <div id="screen-browser" class="screen">
+    <!-- Browser Chrome -->
+    <div id="browser-chrome">
+      <div id="browser-titlebar">
+        <span id="browser-title">HOTS.COM — Microsoft Internet Explorer</span>
+        <div id="browser-winbtns">
+          <button class="wbtn wmin">_</button>
+          <button class="wbtn wmax">□</button>
+          <button class="wbtn wclose" onclick="closeBrowser()">✕</button>
         </div>
-        <div id="landing-tagline">Over 3,000,000 singles have used our services world wide!!</div>
       </div>
-      <div id="landing-body">
-        <div id="landing-left">
-          <p class="landing-text">Ready to begin? Cuz they are!</p>
-          <p class="landing-text">The leading online dating service</p>
-          <div id="members-btn" onclick="goToProfiles()">Members and registered users click here</div>
-          <div id="hearts-left">
-            <span class="glitter-heart">💙</span>
-            <span class="glitter-heart" style="margin-left:-20px">💙</span>
-            <span class="glitter-heart" style="margin-left:-30px;color:#111">🖤</span>
+      <div id="browser-toolbar">
+        <div id="nav-btns">
+          <button class="nav-btn">◄</button>
+          <button class="nav-btn">►</button>
+          <button class="nav-btn">✕</button>
+          <button class="nav-btn">⟳</button>
+        </div>
+        <div id="address-bar">
+          <span id="address-label">Address</span>
+          <input id="address-input" type="text" value="http://www.hots.com" readonly />
+          <button id="go-btn">Go</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Browser Content -->
+    <div id="browser-content">
+
+      <!-- PAGE A: Landing -->
+      <div id="page-landing" class="browser-page active-page">
+        <div id="landing-header">
+          <div id="landing-logo">
+            <span class="logo-hots">HOTS.COM</span><br />
+            <span class="logo-dating">DATING</span>
           </div>
+          <div id="landing-tagline">Over 3,000,000 singles have used our services world wide!!</div>
         </div>
-        <div id="landing-center">
-          <h1 id="landing-title">Join uS Free!</h1>
-          <button id="heart-click-btn" onclick="goToProfiles()">
-            <span class="heart-pulse">💗</span><br/>Click here!!
-          </button>
-        </div>
-        <div id="landing-right">
-          <p class="landing-text">Youre just a few clicks away from meeting thousands of interesting, intelligent, successful singles, just like you!</p>
-          <p class="landing-link">Register now to meet the love of your life</p>
-          <span class="glitter-heart big-heart">💗</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- PAGE B: Profiles -->
-    <div id="page-profiles" class="browser-page">
-      <div id="profile-header">
-        <div id="profile-logo">
-          <span class="logo-hots">HOTS.COM</span><br/>
-          <span class="logo-dating">DATING</span>
-        </div>
-        <div id="profile-tagline">Over 3,000,000 singles have used our services world wide!!</div>
-      </div>
-      <div id="profile-instruction">
-        THESE ARE THE HOTTIES INTERESTED IN YOU.<br/>
-        CLICK LEFT TO REJECT. CLICK RIGHT TO ACCEPT!
-      </div>
-      <div id="profile-main">
-        <div id="profile-info-panel">
-          <h2 id="profile-name">NATA ORDOñEZ</h2>
-          <p><strong>Age:</strong> <span id="profile-age">20</span></p>
-          <p><strong>Interests:</strong> <span id="profile-interests">Hiking, eating, chilling.</span></p>
-          <p><strong>Distance:</strong> <span id="profile-distance">20 miles away</span></p>
-          <p><strong>About:</strong> <span id="profile-bio">I am a HOT girl looking for company ;) Text me to have a good time hehe &lt;3 xoxo</span></p>
-        </div>
-        <div id="profile-photo-panel">
-          <div id="profile-photo-wrap">
-            <img id="profile-photo" src="assets/profile1.png" alt="Profile"/>
-            <canvas id="vhs-canvas"></canvas>
+        <div id="landing-body">
+          <div id="landing-left">
+            <p class="landing-text2">Ready to begin? Cuz they are!</p>
+            <p class="landing-text2">The leading online dating service</p>
+            <div id="members-btn" onclick="goToProfiles()">Members and registered users click here</div>
+            <div id="hearts-left">
+             <div id="hearts-left">
+        <img src="assets/third heart.png" alt="">
+          </div>
+            </div>
+          </div>
+          <div id="landing-center">
+            <h1 id="landing-title">Join us Free!</h1>
+            <button id="heart-click-btn" onclick="goToProfiles()">
+  <img src="assets/first heart.png" alt="">
+  <span>Click here</span>
+</button>
+          </div>
+          <div id="landing-right">
+            <p class="landing-text">Youre just a few clicks away from meeting thousands of interesting, intelligent,
+              successful singles, just like you!</p>
+            <p class="landing-link">Register now to meet the love of your life</p>
+            <div class="big-heart">
+  <img src="assets/second heart.png" alt="">
+</div>
           </div>
         </div>
       </div>
-      <div id="profile-btns">
-        <button id="btn-reject" onclick="rejectProfile()">X</button>
-        <button id="btn-accept" onclick="acceptProfile()">&lt;3</button>
-      </div>
-      <div id="stars-deco">
-        <span class="red-star s1">★</span>
-        <span class="red-star s2">★</span>
-        <span class="red-star s3">★</span>
-        <span class="red-star s4">★</span>
-        <span class="red-star s5">★</span>
-        <span class="deco-heart">💗</span>
-      </div>
-    </div>
 
-  </div><!-- /browser-content -->
-</div><!-- /screen-browser -->
+      <!-- PAGE B: Profiles -->
+      <div id="page-profiles" class="browser-page">
+        <div id="profile-header">
+          <div id="profile-logo">
+            <span class="logo-hots">HOTS.COM</span><br />
+            <span class="logo-dating">DATING</span>
+          </div>
+          <div id="profile-tagline">Over 3,000,000 singles have used our services world wide!!</div>
+        </div>
+        <div id="profile-instruction">
+          THESE ARE THE HOTTIES INTERESTED IN YOU.<br />
+          CLICK LEFT TO REJECT. CLICK RIGHT TO ACCEPT!
+        </div>
+        <div id="profile-main">
+          <div id="profile-info-panel">
+            <h2 id="profile-name">NATA ORDOñEZ</h2>
+            <p><strong>Age:</strong> <span id="profile-age">20</span></p>
+            <p><strong>Interests:</strong> <span id="profile-interests">Hiking, eating, chilling.</span></p>
+            <p><strong>Distance:</strong> <span id="profile-distance">20 miles away</span></p>
+            <p><strong>About:</strong> <span id="profile-bio">I am a HOT girl looking for company ;) Text me to have a
+                good time hehe &lt;3 xoxo</span></p>
+          </div>
+          <div id="profile-photo-panel">
+            <div id="profile-photo-wrap">
+              <img id="profile-photo" src="assets/profile1.png" alt="Profile" />
+              <canvas id="vhs-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+        <div id="profile-btns">
+          <button id="btn-reject" onclick="rejectProfile()">X</button>
+          <button id="btn-accept" onclick="acceptProfile()">&lt;3</button>
+        </div>
+        <div id="stars-deco">
+          <span class="red-star s1">★</span>
+          <span class="red-star s2">★</span>
+          <span class="red-star s3">★</span>
+          <span class="red-star s4">★</span>
+          <span class="red-star s5">★</span>
+          <span class="deco-heart">💗</span>
+        </div>
+      </div>
 
-<!-- ══════════════════════════════
+    </div><!-- /browser-content -->
+  </div><!-- /screen-browser -->
+
+  <!-- ══════════════════════════════
      WIN POPUP — Match Notification
 ══════════════════════════════ -->
-<div id="win-popup" class="win-popup hidden">
-  <div class="win-popup-title">
-    <span>💌</span>
-    <span id="win-popup-title-text">HOTS.COM Notification</span>
-    <button class="win-popup-close" onclick="closeWinPopup()">✕</button>
+  <div id="win-popup" class="win-popup hidden">
+    <div class="win-popup-title">
+      <span>💌</span>
+      <span id="win-popup-title-text">HOTS.COM Notification</span>
+      <button class="win-popup-close" onclick="closeWinPopup()">✕</button>
+    </div>
+    <div class="win-popup-body">
+      <div class="win-popup-icon-big">💗</div>
+      <p id="win-popup-msg">You have a new match!</p>
+    </div>
+    <div class="win-popup-footer">
+      <button class="win-popup-btn" onclick="closeWinPopup()">OK</button>
+      <button class="win-popup-btn" onclick="closeWinPopup()">Cancel</button>
+    </div>
   </div>
-  <div class="win-popup-body">
-    <div class="win-popup-icon-big">💗</div>
-    <p id="win-popup-msg">You have a new match!</p>
-  </div>
-  <div class="win-popup-footer">
-    <button class="win-popup-btn" onclick="closeWinPopup()">OK</button>
-    <button class="win-popup-btn" onclick="closeWinPopup()">Cancel</button>
-  </div>
-</div>
 
-<!-- ══════════════════════════════
+  <!-- ══════════════════════════════
      GOVERNMENT WARNING POPUP
 ══════════════════════════════ -->
-<div id="gov-overlay" class="hidden"></div>
-<div id="gov-popup" class="hidden">
-  <div id="gov-titlebar">
-    <span>♡</span>
-    <span>System Message — URGENT</span>
-    <div id="gov-winbtns">
-      <button class="wbtn2">_</button>
-      <button class="wbtn2">□</button>
-      <button class="wbtn2 wclose" onclick="closeGovPopup()">✕</button>
-    </div>
-  </div>
-  <div id="gov-body">
-    <div id="gov-seal">
-      <div id="gov-seal-ring">
-        <span id="gov-eagle">🦅</span>
-        <svg viewBox="0 0 200 200" id="gov-seal-svg">
-          <path id="seal-arc-top" d="M 20,100 A 80,80 0 0,1 180,100" fill="none"/>
-          <text>
-            <textPath href="#seal-arc-top" startOffset="5%">NATIONAL ARCHIVES AND RECORDS ADMINISTRATION</textPath>
-          </text>
-          <path id="seal-arc-bot" d="M 180,100 A 80,80 0 0,1 20,100" fill="none"/>
-          <text>
-            <textPath href="#seal-arc-bot" startOffset="20%">· 1985 ·</textPath>
-          </text>
-        </svg>
+  <div id="gov-overlay" class="hidden"></div>
+  <div id="gov-popup" class="hidden">
+    <div id="gov-titlebar">
+      <span>♡</span>
+      <span>System Message — URGENT</span>
+      <div id="gov-winbtns">
+        <button class="wbtn2">_</button>
+        <button class="wbtn2">□</button>
+        <button class="wbtn2 wclose" onclick="closeGovPopup()">✕</button>
       </div>
     </div>
-    <h2 id="gov-title-text">ANNOUNCEMENT</h2>
-    <div id="gov-text">
-      <p>The UNITED STATES OF AMERICA asks for complete awareness and care regarding the recent events surrounding <strong>MIMICS</strong>. The current situation is being handled.</p>
-      <p><strong>REMAIN CALM. REMAIN INDOORS.<br/>DO NOT OPEN THE DOOR.</strong></p>
-    </div>
-    <!-- ▼ VIDEO PLACEHOLDER — place your file at assets/warning.mp4 ▼ -->
-    <div id="gov-video-wrap">
-      <video id="gov-video" src="assets/warning.mp4" preload="none"
-             style="width:100%;display:none;"
-             onended="closeGovPopup()"></video>
-      <div id="gov-video-placeholder" onclick="tryPlayVideo()">
-        ▶ CLASSIFIED DOCUMENT — CLICK TO PLAY<br/>
-        <small>(Place video at <code>assets/warning.mp4</code>)</small>
+    <div id="gov-body">
+      <div id="gov-seal">
+        <div id="gov-seal-ring">
+          <span id="gov-eagle">🦅</span>
+          <svg viewBox="0 0 200 200" id="gov-seal-svg">
+            <path id="seal-arc-top" d="M 20,100 A 80,80 0 0,1 180,100" fill="none" />
+            <text>
+              <textPath href="#seal-arc-top" startOffset="5%">NATIONAL ARCHIVES AND RECORDS ADMINISTRATION</textPath>
+            </text>
+            <path id="seal-arc-bot" d="M 180,100 A 80,80 0 0,1 20,100" fill="none" />
+            <text>
+              <textPath href="#seal-arc-bot" startOffset="20%">· 1985 ·</textPath>
+            </text>
+          </svg>
+        </div>
       </div>
+      <h2 id="gov-title-text">ANNOUNCEMENT</h2>
+      <div id="gov-text">
+        <p>The UNITED STATES OF AMERICA asks for complete awareness and care regarding the recent events surrounding
+          <strong>MIMICS</strong>. The current situation is being handled.
+        </p>
+        <p><strong>REMAIN CALM. REMAIN INDOORS.<br />DO NOT OPEN THE DOOR.</strong></p>
+      </div>
+      <!-- ▼ VIDEO PLACEHOLDER — place your file at assets/warning.mp4 ▼ -->
+      <div id="gov-video-wrap">
+        <video id="gov-video" src="assets/warning.mp4" preload="none" style="width:100%;display:none;"
+          onended="closeGovPopup()"></video>
+        <div id="gov-video-placeholder" onclick="tryPlayVideo()">
+          ▶ CLASSIFIED DOCUMENT — CLICK TO PLAY<br />
+          <small>(Place video at <code>assets/warning.mp4</code>)</small>
+        </div>
+      </div>
+      <!-- ▲ END VIDEO PLACEHOLDER ▲ -->
+      <button id="gov-ack-btn" onclick="closeGovPopup()">ACKNOWLEDGE &amp; CLOSE</button>
     </div>
-    <!-- ▲ END VIDEO PLACEHOLDER ▲ -->
-    <button id="gov-ack-btn" onclick="closeGovPopup()">ACKNOWLEDGE &amp; CLOSE</button>
   </div>
-</div>
 
-<!-- ══════════════════════════════
+  <!-- ══════════════════════════════
      CHAT POPUP — appears on match
 ══════════════════════════════ -->
-<div id="chat-overlay" class="hidden"></div>
-<div id="chat-popup" class="hidden">
+  <div id="chat-overlay" class="hidden"></div>
+  <div id="chat-popup" class="hidden">
 
-  <!-- Titlebar -->
-  <div id="chat-titlebar">
-    <span id="chat-title-icon">💗</span>
-    <span id="chat-title-name">JESSICA M. — Chat</span>
-    <div id="chat-winbtns">
-      <button class="wbtn2">_</button>
-      <button class="wbtn2">□</button>
-      <button class="wbtn2 wclose" onclick="blockAndClose()">✕</button>
+    <!-- Titlebar -->
+    <div id="chat-titlebar">
+      <span id="chat-title-icon">💗</span>
+      <span id="chat-title-name">JESSICA M. — Chat</span>
+      <div id="chat-winbtns">
+        <button class="wbtn2">_</button>
+        <button class="wbtn2">□</button>
+        <button class="wbtn2 wclose" onclick="blockAndClose()">✕</button>
+      </div>
+    </div>
+
+    <!-- Match banner -->
+    <div id="chat-match-banner">
+      <span id="chat-match-icon">💗</span>
+      IT'S A MATCH!
+      <span id="chat-match-icon2">💗</span>
+    </div>
+
+    <!-- Profile mini-header -->
+    <div id="chat-profile-strip">
+      <img id="chat-profile-thumb" src="assets/profile1.png" alt="" />
+      <div id="chat-profile-info">
+        <strong id="chat-strip-name">JESSICA M.</strong>
+        <span id="chat-strip-status" class="status-online">● online now</span>
+      </div>
+    </div>
+
+    <!-- Message feed -->
+    <div id="chat-messages"></div>
+
+    <!-- Typing indicator -->
+    <div id="chat-typing" class="hidden">
+      <span id="chat-typing-name">Jessica</span> is typing
+      <span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>
+    </div>
+
+    <!-- User input row -->
+    <div id="chat-input-row">
+      <input id="chat-input" type="text" placeholder="Type a message..." maxlength="120"
+        onkeydown="if(event.key==='Enter') sendUserMessage()" />
+      <button id="chat-send-btn" onclick="sendUserMessage()">Send</button>
+    </div>
+
+    <!-- Action buttons -->
+    <div id="chat-action-row">
+      <button id="chat-continue-btn" onclick="continueChat()">💬 Continue talking</button>
+      <button id="chat-block-btn" onclick="blockAndClose()">🚫 Block &amp; Report</button>
     </div>
   </div>
 
-  <!-- Match banner -->
-  <div id="chat-match-banner">
-    <span id="chat-match-icon">💗</span>
-    IT'S A MATCH!
-    <span id="chat-match-icon2">💗</span>
-  </div>
-
-  <!-- Profile mini-header -->
-  <div id="chat-profile-strip">
-    <img id="chat-profile-thumb" src="assets/profile1.png" alt=""/>
-    <div id="chat-profile-info">
-      <strong id="chat-strip-name">JESSICA M.</strong>
-      <span id="chat-strip-status" class="status-online">● online now</span>
-    </div>
-  </div>
-
-  <!-- Message feed -->
-  <div id="chat-messages"></div>
-
-  <!-- Typing indicator -->
-  <div id="chat-typing" class="hidden">
-    <span id="chat-typing-name">Jessica</span> is typing
-    <span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>
-  </div>
-
-  <!-- User input row -->
-  <div id="chat-input-row">
-    <input id="chat-input" type="text" placeholder="Type a message..." maxlength="120"
-           onkeydown="if(event.key==='Enter') sendUserMessage()"/>
-    <button id="chat-send-btn" onclick="sendUserMessage()">Send</button>
-  </div>
-
-  <!-- Action buttons -->
-  <div id="chat-action-row">
-    <button id="chat-continue-btn" onclick="continueChat()">💬 Continue talking</button>
-    <button id="chat-block-btn"    onclick="blockAndClose()">🚫 Block &amp; Report</button>
-  </div>
-</div>
-
-<!-- ══════════════════════════════
+  <!-- ══════════════════════════════
      GAME OVER SCREEN
 ══════════════════════════════ -->
-<div id="screen-gameover" class="screen">
-  <div id="gameover-bg"></div>
+  <div id="screen-gameover" class="screen">
+    <div id="gameover-bg"></div>
 
-  <!-- Static / interference flash at start -->
-  <div id="gameover-static"></div>
+    <!-- Static / interference flash at start -->
+    <div id="gameover-static"></div>
 
-  <!-- Main text content -->
-  <div id="gameover-content">
-    <p class="gameover-line" id="go-line-1">You are consumed.</p>
-    <p class="gameover-line" id="go-line-2">You are the product<br/>of internet.</p>
-    <div id="go-line-3" class="gameover-sub hidden">
-      <span>CONNECTION TERMINATED</span><br/>
-      <span id="go-session">Session ID: ████████-████-████</span>
+    <!-- Main text content -->
+    <div id="gameover-content">
+      <p class="gameover-line" id="go-line-1">You are consumed.</p>
+      <p class="gameover-line" id="go-line-2">You are the product<br />of internet.</p>
+      <div id="go-line-3" class="gameover-sub hidden">
+        <span>CONNECTION TERMINATED</span><br />
+        <span id="go-session">Session ID: ████████-████-████</span>
+      </div>
+    </div>
+
+    <!-- Tiny restart prompt — appears last -->
+    <div id="gameover-restart" class="hidden">
+      <button onclick="restartGame()">close window</button>
     </div>
   </div>
 
-  <!-- Tiny restart prompt — appears last -->
-  <div id="gameover-restart" class="hidden">
-    <button onclick="restartGame()">close window</button>
-  </div>
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>

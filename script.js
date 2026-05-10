@@ -753,3 +753,45 @@ window.addEventListener('DOMContentLoaded', () => {
   // Initial clock
   updateClock();
 });
+
+// ══════════════════════════════
+// DRAGGABLE DESKTOP ICONS
+// ══════════════════════════════
+
+const desktopIcons = document.querySelectorAll('.desktop-icon');
+
+desktopIcons.forEach(icon => {
+
+  let offsetX = 0;
+  let offsetY = 0;
+  let isDragging = false;
+
+  icon.style.position = 'absolute';
+
+  icon.addEventListener('mousedown', (e) => {
+
+    isDragging = true;
+
+    offsetX = e.clientX - icon.offsetLeft;
+    offsetY = e.clientY - icon.offsetTop;
+
+    icon.style.zIndex = 999;
+
+  });
+
+  document.addEventListener('mousemove', (e) => {
+
+    if (!isDragging) return;
+
+    icon.style.left = (e.clientX - offsetX) + 'px';
+    icon.style.top = (e.clientY - offsetY) + 'px';
+
+  });
+
+  document.addEventListener('mouseup', () => {
+
+    isDragging = false;
+
+  });
+
+});
