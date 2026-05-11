@@ -419,11 +419,13 @@ function closeWinPopup() {
 function showGovPopup() {
   govShown = true;
   stopPopupTimer();
-  triggerGlitchFlash(200);
+
+  document.getElementById('gov-overlay').classList.remove('hidden');
+  document.getElementById('gov-popup').classList.remove('hidden');
+
   setTimeout(() => {
-    document.getElementById('gov-overlay').classList.remove('hidden');
-    document.getElementById('gov-popup').classList.remove('hidden');
-  }, 220);
+    tryPlayVideo();
+  }, 5000);
 }
 
 function closeGovPopup() {
@@ -449,17 +451,20 @@ function closeGovPopup() {
 }
 
 function tryPlayVideo() {
+  const videoWrap = document.getElementById('gov-video-wrap');
   const video = document.getElementById('gov-video');
-  const placeholder = document.getElementById('gov-video-placeholder');
-  // Check if video source is accessible
-  video.style.display = 'block';
-  placeholder.style.display = 'none';
-  video.play().catch(() => {
-    // Video file not found — show placeholder again
-    video.style.display = 'none';
-    placeholder.style.display = 'block';
-    placeholder.innerHTML = '⚠ Video file not found.<br/><small>Place your video at <code>assets/warning.mp4</code></small>';
-  });
+
+  document.getElementById('gov-popup').classList.add('hidden');
+  document.getElementById('gov-overlay').classList.add('hidden');
+
+  videoWrap.classList.remove('hidden');
+  video.currentTime = 0;
+  video.play();
+
+  video.onended = () => {
+    videoWrap.classList.add('hidden');
+    closeGovPopup();
+  };
 }
 
 // ── GLITCH FLASH ──────────────────────────────

@@ -384,62 +384,37 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Arial', 
 .win-popup-btn:hover { filter: brightness(1.05); }
 
 /* ── GOV POPUP ───────────────────────────────── */
-#gov-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 8999;
-}
-#gov-overlay.hidden { display: none; }
+
 #gov-popup {
-  position: fixed; z-index: 9000;
-  width: 480px; max-height: 90vh; overflow-y: auto;
-  background: #0a0a8b; border: 3px solid #4444cc;
-  box-shadow: 0 0 40px rgba(50,50,255,0.5), 4px 4px 0 #000;
-  top: 50%; left: 50%; transform: translate(-50%,-50%);
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0,0,0,0.75);
 }
-#gov-popup.hidden { display: none; }
-#gov-titlebar {
-  background: linear-gradient(to right, #0a246a, #a6caf0);
-  color: #fff; font-size: 12px; font-weight: bold;
-  padding: 4px 6px; display: flex; align-items: center; gap: 6px;
+
+#gov-popup.hidden {
+  display: none;
 }
-#gov-winbtns { margin-left: auto; display: flex; gap: 2px; }
-.wbtn2 {
-  width: 18px; height: 16px; font-size: 9px; cursor: pointer;
-  background: #d4d0c8; border: 1px solid #808080;
+
+#gov-popup-img {
+  width: 500px;
+  max-width: 90vw;
+  height: auto;
+
+  image-rendering: auto;
+
+  filter:
+    contrast(1.05)
+    brightness(0.95);
+
+  box-shadow:
+    0 0 50px rgba(0,0,255,0.35);
 }
-.wbtn2.wclose { background: #cc2222; color: #fff; }
-#gov-body { padding: 20px; text-align: center; }
-#gov-seal {
-  width: 140px; height: 140px; margin: 0 auto 16px;
-  border-radius: 50%; background: radial-gradient(circle, #e8d89a, #c8a840);
-  border: 4px solid #8b7020; position: relative; overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-}
-#gov-seal-ring { position: relative; width: 100%; height: 100%; }
-#gov-eagle { font-size: 3.5rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-55%); }
-#gov-seal-svg {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-}
-#gov-seal-svg text { font-size: 11px; fill: #3a2000; font-family: serif; }
-#gov-title-text {
-  color: #fff; font-size: 1.4rem; text-decoration: underline;
-  margin-bottom: 14px; font-family: serif; letter-spacing: 2px;
-}
-#gov-text { color: #dde; font-size: 0.9rem; line-height: 1.7; text-align: left; margin-bottom: 16px; }
-#gov-text p { margin-bottom: 12px; }
-#gov-video-wrap { margin-bottom: 16px; }
-#gov-video-placeholder {
-  background: #000; border: 2px dashed #4444cc; color: #88aaff;
-  padding: 20px; cursor: pointer; font-size: 0.85rem; font-family: monospace;
-  animation: gov-blink 1.5s step-end infinite;
-}
-@keyframes gov-blink { 0%,100%{opacity:1} 50%{opacity:0.5} }
-#gov-video-placeholder code { color: #aaffaa; }
-#gov-ack-btn {
-  background: #fff; color: #0a0a8b; font-weight: bold; font-size: 0.9rem;
-  padding: 8px 30px; border: 2px solid #4444cc; cursor: pointer;
-  letter-spacing: 1px;
-}
-#gov-ack-btn:hover { background: #dde; }
 
 /* ── DARK MODE POST-WARNING ──────────────────── */
 body.post-warning #page-profiles { background: #0a0a0a; }
@@ -792,4 +767,25 @@ body.post-warning .chat-msg.them {
 
 #screen-gameover.active {
   display: flex !important;
+}
+
+
+#gov-video-wrap.hidden {
+  display: none !important;
+}
+
+#gov-video-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 9500;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#gov-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
 }

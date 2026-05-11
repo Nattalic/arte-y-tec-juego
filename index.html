@@ -187,53 +187,16 @@
   <!-- ══════════════════════════════
      GOVERNMENT WARNING POPUP
 ══════════════════════════════ -->
-  <div id="gov-overlay" class="hidden"></div>
-  <div id="gov-popup" class="hidden">
-    <div id="gov-titlebar">
-      <span>♡</span>
-      <span>System Message — URGENT</span>
-      <div id="gov-winbtns">
-        <button class="wbtn2">_</button>
-        <button class="wbtn2">□</button>
-        <button class="wbtn2 wclose" onclick="closeGovPopup()">✕</button>
-      </div>
-    </div>
-    <div id="gov-body">
-      <div id="gov-seal">
-        <div id="gov-seal-ring">
-          <span id="gov-eagle">🦅</span>
-          <svg viewBox="0 0 200 200" id="gov-seal-svg">
-            <path id="seal-arc-top" d="M 20,100 A 80,80 0 0,1 180,100" fill="none" />
-            <text>
-              <textPath href="#seal-arc-top" startOffset="5%">NATIONAL ARCHIVES AND RECORDS ADMINISTRATION</textPath>
-            </text>
-            <path id="seal-arc-bot" d="M 180,100 A 80,80 0 0,1 20,100" fill="none" />
-            <text>
-              <textPath href="#seal-arc-bot" startOffset="20%">· 1985 ·</textPath>
-            </text>
-          </svg>
-        </div>
-      </div>
-      <h2 id="gov-title-text">ANNOUNCEMENT</h2>
-      <div id="gov-text">
-        <p>The UNITED STATES OF AMERICA asks for complete awareness and care regarding the recent events surrounding
-          <strong>MIMICS</strong>. The current situation is being handled.
-        </p>
-        <p><strong>REMAIN CALM. REMAIN INDOORS.<br />DO NOT OPEN THE DOOR.</strong></p>
-      </div>
-      <!-- ▼ VIDEO PLACEHOLDER — place your file at assets/warning.mp4 ▼ -->
-      <div id="gov-video-wrap">
-        <video id="gov-video" src="assets/warning.mp4" preload="none" style="width:100%;display:none;"
-          onended="closeGovPopup()"></video>
-        <div id="gov-video-placeholder" onclick="tryPlayVideo()">
-          ▶ CLASSIFIED DOCUMENT — CLICK TO PLAY<br />
-          <small>(Place video at <code>assets/warning.mp4</code>)</small>
-        </div>
-      </div>
-      <!-- ▲ END VIDEO PLACEHOLDER ▲ -->
-      <button id="gov-ack-btn" onclick="closeGovPopup()">ACKNOWLEDGE &amp; CLOSE</button>
-    </div>
-  </div>
+ <div id="gov-overlay" class="hidden"></div>
+
+<div id="gov-popup" class="hidden">
+  <img id="gov-popup-img" src="assets/goberment pop up.png" alt="Government Warning">
+</div>
+
+<!-- VIDEO FULLSCREEN -->
+<div id="gov-video-wrap" class="hidden">
+  <video id="gov-video" src="assets/warning.mp4"></video>
+</div>
 
   <!-- ══════════════════════════════
      CHAT POPUP — appears on match
