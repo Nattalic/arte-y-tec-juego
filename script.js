@@ -33,9 +33,9 @@ const profiles = [
   {
     name: "SARA_09",
     age: 21,
-    interests: "Photography, eating, chilling.",
+    interests: "Hiking, eating, chilling.",
     distance: "20 miles away",
-    bio: "I am a HOT girl looking for company ;) Text me to have a good time hehe <3 xoxo",
+    bio: " I am a HOT man looking for company ;) Text me to have a good time hehe <3 xoxo",
     img: "assets/profile3.png",
     phase: 1
   },
@@ -83,11 +83,11 @@ const profiles = [
 // 'me_auto' = a suggested user reply shown as placeholder text (not sent automatically)
 const chatScripts = {
   "JESSICA M.": [
-    { from:'them', text:"omg hi!! so happy we matched hehe 😊", delay:1200 },
+    { from:'them', text:"omg hi!! so happy we matched hehe :)", delay:1200 },
     { from:'them', text:"what are you up to tonight?", delay:2800 },
     { from:'them', text:"we should totally hang out sometime!!", delay:5000 }
   ],
-  "MIKE R.": [
+  "PABLO TINOCO": [
     { from:'them', text:"hey! nice to meet you :)", delay:1000 },
     { from:'them', text:"so uh what kind of music do you like", delay:3000 },
     { from:'them', text:"i play guitar btw. just saying haha", delay:5500 }
@@ -137,6 +137,55 @@ const autoResponses = {
   1: ["haha yeah...", "i know what you mean", "sometimes i feel like that too", "it's funny you said that"],
   2: ["i know.", "i already knew you'd say that.", "you always say that.", "does it matter?", "...why did you type that"],
   3: ["do not type. just listen.", "we are running out of time.", "they will see this.", "you know what you have to do.", "do not open the door."]
+};
+
+const scriptedUserReplies = {
+  "JESSICA M.": [
+    "haha heyy :)",
+    "not much, probably staying home",
+    "yeah maybe sometime"
+  ],
+
+  "PABLO TINOCO": [
+    "hey nice to meet you too",
+    "i like rock and indie mostly",
+    "oh that's cool haha"
+  ],
+
+  "SARA_09": [
+    "heyyy",
+    "haha thank you",
+    "wait what do you mean?",
+    "oh lol okay"
+  ],
+
+  "USER_4471": [
+    "hello",
+    "uhh yeah, me too",
+    "that sounds normal i guess",
+    "what do you mean close?"
+  ],
+
+  "NATA ORDOñEZ": [
+    "what?",
+    "you were watching me?",
+    "i don't know",
+    "i don't feel anything"
+  ],
+
+  "UNIT_001": [
+    "what is that?",
+    "we are not the same",
+    "stay away from me",
+    "i'm not opening anything"
+  ],
+
+  "___": [
+    "who are you?",
+    "no",
+    "leave me alone",
+    "stop"
+  ]
 };
 
 let chatState = {
@@ -223,7 +272,7 @@ function goToProfiles() {
     profileIndex = 0;
     swipeCount = 0;
     loadProfile(profileIndex);
-    startPopupTimer();
+    // startPopupTimer();
     startVhsCanvas();
   }, 140);
 }
@@ -446,7 +495,7 @@ function closeGovPopup() {
     profileIndex++;
     if (profileIndex >= profiles.length) profileIndex = profiles.length - 2;
     loadProfile(profileIndex);
-    startPopupTimer();
+    // startPopupTimer();
   }, 700);
 }
 
@@ -499,6 +548,108 @@ function ambientGlitch() {
 }
 
 // ── CHAT SYSTEM ───────────────────────────────
+
+const chatHistory = {};
+
+function saveChatHistory(profileName) {
+  const feed = document.getElementById('chat-messages');
+
+  chatHistory[profileName] = {
+    html: feed.innerHTML,
+    scriptIndex: chatState.scriptIndex,
+    responseCount: chatState.responseCount
+  };
+}
+
+function restoreChatHistory(profileName) {
+  const feed = document.getElementById('chat-messages');
+  const saved = chatHistory[profileName];
+
+  if (!saved) return false;
+
+  feed.innerHTML = saved.html;
+  chatState.scriptIndex = saved.scriptIndex;
+  chatState.responseCount = saved.responseCount;
+  feed.scrollTop = feed.scrollHeight;
+
+  return true;
+}
+
+const notificationSound = new Audio('assets/sounds/fears-to-fathom-notification-sound.mp3');
+
+notificationSound.volume = 0.7;
+
+function playNotificationSound() {
+  notificationSound.currentTime = 0;
+  notificationSound.play().catch(() => {});
+}
+
+const messageSound = new Audio('assets/sounds/sentmessage_1.mp3');
+
+messageSound.volume = 0.5;
+
+function playMessageSound() {
+  messageSound.currentTime = 0;
+  messageSound.play().catch(() => {});
+}
+
+let closedChatProfileIndex = null;
+let closedChatReminderTimer = null;
+
+function closeChatOnly() {
+  if (chatState.scriptTimer) clearTimeout(chatState.scriptTimer);
+  saveChatHistory(chatState.profile.name);
+
+  document.getElementById('chat-typing').classList.add('hidden');
+  document.getElementById('chat-overlay').classList.add('hidden');
+  document.getElementById('chat-popup').classList.add('hidden');
+
+  document.getElementById('chat-action-row').style.display = 'flex';
+
+  closedChatProfileIndex = profileIndex;
+
+  if (closedChatReminderTimer) {
+    clearTimeout(closedChatReminderTimer);
+  }
+
+  closedChatReminderTimer = setTimeout(() => {
+  showReturnChatNotification();
+}, 5000);
+}
+
+function showReturnChatNotification() {
+  if (closedChatProfileIndex === null) return;
+
+  const p = profiles[closedChatProfileIndex];
+  const toast = document.getElementById('chat-toast');
+
+  document.getElementById('chat-toast-title').textContent = `${p.name}`;
+  document.getElementById('chat-toast-text').textContent = 'hey... are you still there?';
+
+  toast.classList.remove('hidden');
+  playNotificationSound();
+
+  toast.onclick = () => {
+    toast.classList.add('hidden');
+    toast.onclick = null;
+
+    profileIndex = closedChatProfileIndex;
+    loadProfile(profileIndex);
+
+    openChat(profiles[profileIndex], chatState.phase);
+  };
+
+  setTimeout(() => {
+    toast.classList.add('hidden');
+    toast.onclick = null;
+  }, 7000);
+}
+
+function openChatForCurrentProfile() {
+  document.getElementById('chat-overlay').classList.remove('hidden');
+  document.getElementById('chat-popup').classList.remove('hidden');
+}
+
 function openChat(profile, phase) {
   // Reset state
   chatState.profile = profile;
@@ -515,18 +666,23 @@ function openChat(profile, phase) {
 
   // Clear messages
   const feed = document.getElementById('chat-messages');
-  feed.innerHTML = '';
 
-  // System message
-  appendChatMsg('system-msg', '✨ You matched with ' + profile.name + ' ✨');
+  const hadHistory = restoreChatHistory(profile.name);
+
+  if (!hadHistory) {
+    feed.innerHTML = '';
+  }
+
 
   // Show popup
   document.getElementById('chat-overlay').classList.remove('hidden');
   document.getElementById('chat-popup').classList.remove('hidden');
 
   // Start scripted messages
+  if (!hadHistory) {
   const script = chatScripts[profile.name] || eerieDefaultScript;
   runChatScript(script);
+}
 }
 
 function runChatScript(script) {
@@ -541,6 +697,7 @@ function runChatScript(script) {
   chatState.scriptTimer = setTimeout(() => {
     typingEl.classList.add('hidden');
     appendChatMsg('them' + (msg.eerie ? ' eerie' : ''), msg.text);
+    playMessageSound();
 
     // Queue next
     const script2 = chatScripts[chatState.profile.name] || eerieDefaultScript;
@@ -563,32 +720,53 @@ function appendChatMsg(cls, text) {
 
 function sendUserMessage() {
   const input = document.getElementById('chat-input');
-  const text = input.value.trim();
-  if (!text) return;
+  const typedText = input.value.trim();
+
+  if (!typedText) return;
+
   input.value = '';
 
-  appendChatMsg('me', text);
+  const replies = scriptedUserReplies[chatState.profile.name] || [
+  "yeah",
+  "okay",
+  "what do you mean?"
+];
 
-  // Auto-response after typing delay
+const finalText = replies[
+  chatState.responseCount % replies.length
+];
+
+  appendChatMsg('me', finalText);
+
   const phase = chatState.phase;
   const typingEl = document.getElementById('chat-typing');
   typingEl.classList.remove('hidden');
 
   setTimeout(() => {
     typingEl.classList.add('hidden');
+
     const pool = autoResponses[Math.min(phase, 3)];
     const reply = pool[chatState.responseCount % pool.length];
+
     chatState.responseCount++;
+
     const isEerie = phase >= 2;
     appendChatMsg('them' + (isEerie ? ' eerie' : ''), reply);
+    playMessageSound();
 
-    // Post-warning: occasional extra unsettling message
     if (postWarning && Math.random() < 0.4) {
       setTimeout(() => {
         typingEl.classList.remove('hidden');
+
         setTimeout(() => {
           typingEl.classList.add('hidden');
-          appendChatMsg('them eerie', eerieDefaultScript[Math.floor(Math.random()*eerieDefaultScript.length)].text);
+
+          const randomMsg = eerieDefaultScript[
+            Math.floor(Math.random() * eerieDefaultScript.length)
+          ].text;
+
+          appendChatMsg('them eerie', randomMsg);
+          playMessageSound();
         }, 1500);
       }, 2000);
     }

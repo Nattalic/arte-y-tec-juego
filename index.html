@@ -95,7 +95,6 @@
             <p class="landing-text2">Ready to begin? Cuz they are!</p>
             <p class="landing-text2">The leading online dating service</p>
             <div id="members-btn" onclick="goToProfiles()">Members and registered users click here</div>
-            <div id="hearts-left">
              <div id="hearts-left">
         <img src="assets/third heart.png" alt="">
           </div>
@@ -111,7 +110,7 @@
           <div id="landing-right">
             <p class="landing-text">Youre just a few clicks away from meeting thousands of interesting, intelligent,
               successful singles, just like you!</p>
-            <p class="landing-link">Register now to meet the love of your life</p>
+            <p class="landing-link" onclick="goToProfiles()">Register now to meet the love of your life</p>
             <div class="big-heart">
   <img src="assets/second heart.png" alt="">
 </div>
@@ -158,31 +157,14 @@
           <span class="red-star s3">★</span>
           <span class="red-star s4">★</span>
           <span class="red-star s5">★</span>
-          <span class="deco-heart">💗</span>
+          <div class="deco-heart">
+        <img src="assets/second heart.png" alt="">
+      </div>
         </div>
       </div>
 
     </div><!-- /browser-content -->
   </div><!-- /screen-browser -->
-
-  <!-- ══════════════════════════════
-     WIN POPUP — Match Notification
-══════════════════════════════ -->
-  <div id="win-popup" class="win-popup hidden">
-    <div class="win-popup-title">
-      <span>💌</span>
-      <span id="win-popup-title-text">HOTS.COM Notification</span>
-      <button class="win-popup-close" onclick="closeWinPopup()">✕</button>
-    </div>
-    <div class="win-popup-body">
-      <div class="win-popup-icon-big">💗</div>
-      <p id="win-popup-msg">You have a new match!</p>
-    </div>
-    <div class="win-popup-footer">
-      <button class="win-popup-btn" onclick="closeWinPopup()">OK</button>
-      <button class="win-popup-btn" onclick="closeWinPopup()">Cancel</button>
-    </div>
-  </div>
 
   <!-- ══════════════════════════════
      GOVERNMENT WARNING POPUP
@@ -205,22 +187,30 @@
   <div id="chat-popup" class="hidden">
 
     <!-- Titlebar -->
-    <div id="chat-titlebar">
-      <span id="chat-title-icon">💗</span>
-      <span id="chat-title-name">JESSICA M. — Chat</span>
-      <div id="chat-winbtns">
-        <button class="wbtn2">_</button>
-        <button class="wbtn2">□</button>
-        <button class="wbtn2 wclose" onclick="blockAndClose()">✕</button>
-      </div>
-    </div>
+<div id="chat-titlebar">
+  <span id="chat-title-name">JESSICA M. — Chat</span>
 
-    <!-- Match banner -->
-    <div id="chat-match-banner">
-      <span id="chat-match-icon">💗</span>
-      IT'S A MATCH!
-      <span id="chat-match-icon2">💗</span>
-    </div>
+  <div id="chat-winbtns">
+    <button class="wbtn2">_</button>
+    <button class="wbtn2">□</button>
+    <button class="wbtn2 wclose" onclick="closeChatOnly()">✕</button>
+  </div>
+</div>
+
+<!-- Match banner -->
+<div id="chat-match-banner">
+
+  <span id="chat-match-icon">
+    <img src="assets/second heart.png" alt="">
+  </span>
+
+  IT'S A MATCH!
+
+  <span id="chat-match-icon2">
+    <img src="assets/second heart.png" alt="">
+  </span>
+
+</div>
 
     <!-- Profile mini-header -->
     <div id="chat-profile-strip">
@@ -249,8 +239,8 @@
 
     <!-- Action buttons -->
     <div id="chat-action-row">
-      <button id="chat-continue-btn" onclick="continueChat()">💬 Continue talking</button>
-      <button id="chat-block-btn" onclick="blockAndClose()">🚫 Block &amp; Report</button>
+      <button id="chat-continue-btn" onclick="continueChat()">Continue talking</button>
+      <button id="chat-block-btn" onclick="blockAndClose()">Block &amp; Report</button>
     </div>
   </div>
 
@@ -280,6 +270,12 @@
   </div>
 
   <script src="script.js"></script>
+
+  <div id="chat-toast" class="hidden">
+  <div id="chat-toast-title">New message</div>
+  <div id="chat-toast-text"></div>
+</div>
+
 </body>
 
 </html>
