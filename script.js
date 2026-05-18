@@ -157,34 +157,26 @@ const scriptedUserReplies = {
     "haha thank you",
     "wait what do you mean?",
     "oh lol okay"
+  ]
+};
+
+const scriptedThemReplies = {
+  "JESSICA M.": [
+    "hehe cute :)",
+    "omg same!!",
+    "yayyy i knew you would say yes"
   ],
 
-  "USER_4471": [
-    "hello",
-    "uhh yeah, me too",
-    "that sounds normal i guess",
-    "what do you mean close?"
+  "PABLO TINOCO": [
+    "haha nice",
+    "same, i like that too",
+    "maybe i could play something for you"
   ],
 
-  "NATA ORDOñEZ": [
-    "what?",
-    "you were watching me?",
-    "i don't know",
-    "i don't feel anything"
-  ],
-
-  "UNIT_001": [
-    "what is that?",
-    "we are not the same",
-    "stay away from me",
-    "i'm not opening anything"
-  ],
-
-  "___": [
-    "who are you?",
-    "no",
-    "leave me alone",
-    "stop"
+  "SARA_09": [
+    "you seem nervous lol",
+    "nothinggg don't worry",
+    "i just notice things"
   ]
 };
 
@@ -192,6 +184,7 @@ let chatState = {
   profile: null,
   scriptIndex: 0,
   responseCount: 0,
+  userReplyIndex: 0,
   scriptTimer: null,
   phase: 0
 };
@@ -347,17 +340,19 @@ function acceptProfile() {
 }
 
 function advanceProfile() {
-  // Trigger government warning at swipe 4 (before it was shown)
-  if (swipeCount === 4 && !govShown) {
+  const currentProfile = profiles[profileIndex];
+
+  if (currentProfile.name === "SARA_09" && !govShown) {
     showGovPopup();
     return;
   }
 
   profileIndex++;
+
   if (profileIndex >= profiles.length) {
-    // Loop through uncanny profiles at the end
     profileIndex = Math.max(3, profiles.length - 3);
   }
+
   loadProfile(profileIndex);
 }
 
@@ -655,6 +650,7 @@ function openChat(profile, phase) {
   chatState.profile = profile;
   chatState.scriptIndex = 0;
   chatState.responseCount = 0;
+  chatState.userReplyIndex = 0;
   chatState.phase = phase;
   if (chatState.scriptTimer) clearTimeout(chatState.scriptTimer);
 
@@ -726,51 +722,39 @@ function sendUserMessage() {
 
   input.value = '';
 
-  const replies = scriptedUserReplies[chatState.profile.name] || [
-  "yeah",
-  "okay",
-  "what do you mean?"
-];
+  const profileName = chatState.profile.name;
 
-const finalText = replies[
-  chatState.responseCount % replies.length
-];
+  const userReplies = scriptedUserReplies[profileName] || [
+    "yeah",
+    "okay",
+    "what do you mean?"
+  ];
 
+  const themReplies = scriptedThemReplies[profileName] || [
+    "i see.",
+    "interesting.",
+    "keep talking."
+  ];
+
+  const index = chatState.userReplyIndex;
+
+  const finalText = userReplies[index] || userReplies[userReplies.length - 1];
   appendChatMsg('me', finalText);
 
-  const phase = chatState.phase;
+  chatState.userReplyIndex++;
+
   const typingEl = document.getElementById('chat-typing');
   typingEl.classList.remove('hidden');
 
   setTimeout(() => {
     typingEl.classList.add('hidden');
 
-    const pool = autoResponses[Math.min(phase, 3)];
-    const reply = pool[chatState.responseCount % pool.length];
+    const reply = themReplies[index] || themReplies[themReplies.length - 1];
+    const isEerie = chatState.phase >= 2;
 
-    chatState.responseCount++;
-
-    const isEerie = phase >= 2;
     appendChatMsg('them' + (isEerie ? ' eerie' : ''), reply);
     playMessageSound();
-
-    if (postWarning && Math.random() < 0.4) {
-      setTimeout(() => {
-        typingEl.classList.remove('hidden');
-
-        setTimeout(() => {
-          typingEl.classList.add('hidden');
-
-          const randomMsg = eerieDefaultScript[
-            Math.floor(Math.random() * eerieDefaultScript.length)
-          ].text;
-
-          appendChatMsg('them eerie', randomMsg);
-          playMessageSound();
-        }, 1500);
-      }, 2000);
-    }
-  }, 1200 + Math.random() * 1000);
+  }, 1200);
 }
 
 function continueChat() {
@@ -842,7 +826,11 @@ function blockAndClose() {
 
     // Advance to next profile
     swipeCount++;
-    if (swipeCount === 4 && !govShown) {
+
+    const currentProfile = profiles[profileIndex];
+
+    if (
+      currentProfile.name === "SARA_09" && !govShown) {
       showGovPopup();
     } else {
       profileIndex++;

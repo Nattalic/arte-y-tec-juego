@@ -202,14 +202,14 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Arial', 
 #landing-left {
   position: absolute;
   left: 240px;
-  top: 200px;
+  top: 150px;
   width: 420px;
 }
 
 #landing-center {
   position: absolute;
   left: 50%;
-  top: 200px;
+  top: 150px;
   transform: translateX(-50%);
   text-align: center;
 }
@@ -217,7 +217,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Arial', 
 #landing-right {
   position: absolute;
   right: 200px;
-  top: 320px;
+  top: 270px;
   width: 400px;
 }
 
@@ -242,9 +242,9 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Arial', 
 #landing-title {
   font-family: 'Irish Grover', cursive;
   font-weight: normal;
-  font-size: 90px;
+  font-size: 75px;
   color: #ff0000;
-  margin-left: 800px;
+  margin-left: 600px;
   width:900px;
 }
 
@@ -268,7 +268,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Arial', 
 }
 
 #hearts-left img {
-  width: 300px;
+  width: 250px;
   height: auto;
   display: block;
   margin-left: -200px;
@@ -286,7 +286,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Arial', 
 }
 
 #heart-click-btn img {
-  width: 300px;
+  width: 80px;
   height: auto;
   display: block;
 }
@@ -490,7 +490,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Arial', 
 }
 
 #gov-popup-img {
-  width: 700px;
+  width: 500px;
   max-width: 90vw;
   height: auto;
   display: block;
@@ -516,8 +516,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Arial', 
 }
 
 #gov-video {
-  width: 90vw;
-  height: 90vh;
+  width: 100vw;
+  height: 100vh;
   object-fit: contain;
 }
 
@@ -914,7 +914,7 @@ body.post-warning .chat-msg.them {
   z-index: 3;
 
   color: #ddd;
-  font-size: 25px;
+  font-size: 22px;
   font-family: 'Arial Narrow', sans-serif;
   text-align: center;
   text-decoration: underline;
@@ -926,8 +926,8 @@ body.post-warning .chat-msg.them {
 
 #profile-main {
   position: absolute;
-  top: 220px;
-  left: 420px;
+  top: 200px;
+  left: 300px;
 
   display: flex;
   gap: 18px;
@@ -971,8 +971,8 @@ body.post-warning .chat-msg.them {
 }
 
 #profile-photo-wrap {
-  width: 450px;
-  height: 450px;
+  width: 360px;
+  height: 360px;
 
   border: none;
   background: #111;
@@ -990,8 +990,8 @@ body.post-warning .chat-msg.them {
 /* botones */
 #profile-btns {
   position: absolute;
-  top: 700px;
-  left: 735px;
+  top: 570px;
+  left: 620px;
 
   display: flex;
   gap: 14px;
@@ -1000,7 +1000,7 @@ body.post-warning .chat-msg.them {
 
 #btn-reject,
 #btn-accept {
-  width: 220px;
+  width:172px;
   height: 80px;
 
   font-size: 40px;
@@ -1023,7 +1023,7 @@ body.post-warning .chat-msg.them {
 /* decoración derecha */
 #stars-deco {
   position: absolute;
-  right: 130px;
+  right: 70px;
   top: 140px;
   width: 0px;
   height: 480px;
@@ -1043,7 +1043,7 @@ body.post-warning .chat-msg.them {
 .deco-heart {
   position: absolute;
   top: 305px;
-  right: 240px;
+  right: 200px;
   animation: none;
 }
 
@@ -1112,7 +1112,7 @@ body.post-warning .chat-msg.them {
   padding-left: 20px;
   font-family: 'Gelasio', serif;
   font-style: normal;
-  margin-right: 1100px;
+  margin-right: 700px;
 }
 
 /* CHAT NOTIFICATION  */
@@ -1126,7 +1126,7 @@ body.post-warning .chat-msg.them {
   width: 320px;
   padding: 14px 16px;
 
-  background: #ece9d8;
+  background: #ffffff;
   border: 2px solid #6a0a0a;
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.45);
