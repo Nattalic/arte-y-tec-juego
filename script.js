@@ -18,16 +18,16 @@ const profiles = [
     interests: "Hiking, Netflix, cooking.",
     distance: "8 miles away",
     bio: "Just a normal girl looking for fun :) love dogs and long walks!!",
-    img: "assets/profile1.png",
+    img: "assets/profile1.jpeg",
     phase: 0
   },
   {
-    name: "MIKE R.",
+    name: "PABLO TINOCO",
     age: 27,
     interests: "Gaming, music, travel.",
     distance: "14 miles away",
     bio: "Easy going guy. Looking for someone real to share good times with haha.",
-    img: "assets/profile2.png",
+    img: "assets/profile2.jpeg",
     phase: 0
   },
   {
@@ -45,7 +45,7 @@ const profiles = [
     interests: "Hiking, eating, chilling.",
     distance: "3 miles away",
     bio: "I love people. I love meeting people. I love to be around people. Are you people?",
-    img: "assets/profile4.png",
+    img: "assets/profile4.jpeg",
     phase: 2
   },
   {
@@ -54,7 +54,7 @@ const profiles = [
     interests: "Being near you. Watching. Waiting.",
     distance: "0 miles away",
     bio: "I know you. I have always known you. Please do not run. It only makes it worse.",
-    img: "assets/profile5.png",
+    img: "assets/profile5.jpeg",
     phase: 3
   },
   // Post-warning profiles (more uncanny)
@@ -64,7 +64,7 @@ const profiles = [
     interests: "Observing. Recording. Replicating.",
     distance: "12 miles away",
     bio: "We are compatible. You are compatible. Please accept. Please accept. Please accept.",
-    img: "assets/profile4.png",
+    img: "assets/profile4.jpeg",
     phase: 3
   },
   {
@@ -73,7 +73,7 @@ const profiles = [
     interests: "You.",
     distance: "inside",
     bio: "do not open the door do not open the door do not open the door do not open the door",
-    img: "assets/profile5.png",
+    img: "assets/profile5.jpeg",
     phase: 3
   }
 ];

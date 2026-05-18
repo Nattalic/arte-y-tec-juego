@@ -19,7 +19,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Arial', 
   background: repeating-linear-gradient(
     to bottom,
     transparent 0px, transparent 3px,
-    rgba(132, 132, 132, 0.18) 1px, rgba(87, 87, 87, 0.18) 4px
+    rgba(15, 15, 15, 0.18) 2px, rgba(87, 87, 87, 0.18) 6px
   );
   animation: scanline-drift 8s linear infinite;
 }
@@ -544,8 +544,8 @@ body.post-warning #page-profiles::before {
 
 /* Uncanny / horror message styles */
 .chat-msg.eerie {
-  background: #1a0000; color: #cc4444;
-  border: 1px solid #550000;
+  background: #e0ddd8; color: #111;
+  border: 1px solid #bbb; align-self: flex-start;
   font-family: monospace;
   animation: eerie-flicker 3s ease-in-out infinite;
 }
