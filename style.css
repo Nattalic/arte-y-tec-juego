@@ -757,16 +757,30 @@ body.post-warning .chat-msg.them {
    GAME OVER SCREEN
 ══════════════════════════════════════════════ */
 #screen-gameover {
-  background: #1565a8;
+  position: fixed;
+  inset: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: #ffffff;
+
+  display: none;
+
   flex-direction: column;
   align-items: flex-start;
-  height: 930px;
   justify-content: center;
+
   padding: 60px 70px;
-  position: relative;
+
   overflow: hidden;
+
+  z-index: 999999;
 }
 
+#screen-gameover.active {
+  display: flex;
+}
 
 /* Blue background texture — slightly uneven like reference */
 #gameover-bg {
@@ -1150,4 +1164,36 @@ body.post-warning .chat-msg.them {
   font-size: 20px;
   color: #111;
   line-height: 1.3;
+}
+
+.final-photo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.captured-photo {
+  width: 220px;
+  border: 2px solid #550000;
+  filter:
+    grayscale(100%)
+    contrast(1.4)
+    brightness(0.7);
+    
+  animation: photoFlicker 0.12s infinite;
+}
+
+.photo-caption {
+  color: #ff4d4d;
+  font-size: 12px;
+  text-transform: lowercase;
+  letter-spacing: 2px;
+}
+
+@keyframes photoFlicker {
+
+  0% { opacity: 1; transform: translateX(0px); }
+  50% { opacity: 0.85; transform: translateX(2px); }
+  100% { opacity: 1; transform: translateX(-2px); }
+
 }
