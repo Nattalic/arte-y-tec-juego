@@ -31,7 +31,7 @@ const profiles = [
     phase: 0,
   },
   {
-    name: "SARA_09",
+    name: "RUBIU",
     age: 21,
     interests: "Hiking, eating, chilling.",
     distance: "20 miles away",
@@ -442,7 +442,7 @@ function acceptProfile() {
 function advanceProfile() {
   const currentProfile = profiles[profileIndex];
 
-  if (currentProfile.name === "SARA_09" && !govShown) {
+  if (currentProfile.name === "RUBIU" && !govShown) {
     showGovPopup();
     return;
   }
