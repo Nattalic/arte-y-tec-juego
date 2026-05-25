@@ -10,6 +10,8 @@ let popupTimer = null;
 let govShown = false;
 let capturedPlayerPhoto = null;
 
+const FINAL_MONSTER_NAME = "NATA ORDOñEZ";
+
 // ── PROFILES DATA ──────────────────────────────
 // Images: 0–4 = normal → uncanny. Phase drives horror level.
 const profiles = [
@@ -85,7 +87,7 @@ const profiles = [
 const chatScripts = {
   "JESSICA M.": [
     { from: "them", text: "omg hi!! so happy we matched hehe :)", delay: 1200 },
-    { from: "them", text: "what are you up to tonight?", delay: 2800 },
+    { from: "them", text: "what are you up to tonight?", delay: 1300 },
     {
       from: "them",
       text: "we should totally hang out sometime!!",
@@ -94,7 +96,7 @@ const chatScripts = {
   ],
   "PABLO TINOCO": [
     { from: "them", text: "hey! nice to meet you :)", delay: 1000 },
-    { from: "them", text: "so uh what kind of music do you like", delay: 3000 },
+    { from: "them", text: "so uh what kind of music do you like", delay: 1000 },
     { from: "them", text: "i play guitar btw. just saying haha", delay: 5500 },
   ],
   "RUBIU": [
@@ -120,24 +122,31 @@ const chatScripts = {
   }
 ],
   USER_4471: [
-    { from: "them", text: "HELLO.", delay: 800 },
-    {
-      from: "them",
-      text: "I AM HAPPY TO MEET YOU. I AM A PERSON.",
-      delay: 2000,
-    },
-    {
-      from: "them",
-      text: "I ENJOY HUMAN ACTIVITIES SUCH AS EATING AND BREATHING.",
-      delay: 4000,
-    },
-    {
-      from: "them",
-      text: "YOU ARE VERY CLOSE TO ME.",
-      delay: 6500,
-      eerie: true,
-    },
-  ],
+  {
+    from: "them",
+    text: "you should not have matched with me.",
+    delay: 900,
+    eerie: true,
+  },
+  {
+    from: "them",
+    text: "i am not the one you need to fear.",
+    delay: 2800,
+    eerie: true,
+  },
+  {
+    from: "them",
+    text: "something else is using these profiles.",
+    delay: 5200,
+    eerie: true,
+  },
+  {
+    from: "them",
+    text: "if it asks you to open anything, don't.",
+    delay: 7600,
+    eerie: true,
+  },
+],
   "NATA ORDOñEZ": [
     { from: "them", text: "i knew you would say yes", delay: 600, eerie: true },
     {
@@ -255,6 +264,12 @@ const scriptedUserReplies = {
   "okay but this site feels weird sometimes",
   "nah it's probably nothing"
 ],
+"USER_4471": [
+  "what are you talking about?",
+  "are you threatening me?",
+  "what is coming?",
+  "open what?"
+],
 };
 
 const scriptedThemReplies = {
@@ -275,6 +290,12 @@ const scriptedThemReplies = {
   "this app gives me bad vibes sometimes",
   "like sometimes i feel like some accounts aren't real lol",
   "but maybe that's just me overthinking"
+],
+"USER_4471": [
+  "no. i am warning you.",
+  "i was like you once.",
+  "it wears faces until you choose one.",
+  "the last one is not a profile."
 ],
 };
 
@@ -767,22 +788,25 @@ function showReturnChatNotification() {
   }, 7000);
 }
 
-function openChatForCurrentProfile() {
-  document.getElementById("chat-overlay").classList.remove("hidden");
-  document.getElementById("chat-popup").classList.remove("hidden");
-}
-
 function openChat(profile, phase) {
+  // Reset visual del chat cada vez que se abre un perfil nuevo
+  document.getElementById("chat-action-row").style.display = "flex";
+  document.getElementById("chat-input").disabled = false;
+  document.getElementById("chat-send-btn").disabled = false;
+  document.getElementById("chat-typing").classList.add("hidden");
+
   // Reset state
   chatState.profile = profile;
   chatState.scriptIndex = 0;
   chatState.responseCount = 0;
   chatState.userReplyIndex = 0;
   chatState.phase = phase;
-  // Final entity secretly activates webcam
-  if (phase >= 3) {
+
+  // Solo el monstruo final prepara la foto
+  if (profile.name === FINAL_MONSTER_NAME) {
     capturePlayerPhoto();
   }
+
   if (chatState.scriptTimer) clearTimeout(chatState.scriptTimer);
 
   // Populate header
@@ -795,7 +819,6 @@ function openChat(profile, phase) {
 
   // Clear messages
   const feed = document.getElementById("chat-messages");
-
   const hadHistory = restoreChatHistory(profile.name);
 
   if (!hadHistory) {
@@ -904,7 +927,59 @@ function continueChat() {
   document.getElementById("chat-action-row").style.display = "none";
   document.getElementById("chat-input").focus();
 
-  if (chatState.phase >= 3) {
+  if (chatState.profile.name === "USER_4471") {
+  const typingEl = document.getElementById("chat-typing");
+
+  setTimeout(() => {
+    typingEl.classList.remove("hidden");
+
+    setTimeout(() => {
+      typingEl.classList.add("hidden");
+      appendChatMsg("them eerie", "listen carefully.");
+      playMessageSound();
+    }, 1800);
+  }, 1000);
+
+  setTimeout(() => {
+    typingEl.classList.remove("hidden");
+
+    setTimeout(() => {
+      typingEl.classList.add("hidden");
+      appendChatMsg("them eerie", "i brought people here too.");
+      playMessageSound();
+    }, 2000);
+  }, 4200);
+
+  setTimeout(() => {
+    typingEl.classList.remove("hidden");
+
+    setTimeout(() => {
+      typingEl.classList.add("hidden");
+      appendChatMsg("them eerie", "then it started answering with their names.");
+      playMessageSound();
+    }, 2300);
+  }, 7600);
+
+  setTimeout(() => {
+    typingEl.classList.remove("hidden");
+
+    setTimeout(() => {
+      typingEl.classList.add("hidden");
+      appendChatMsg("them eerie", "when you see the empty name, close the window.");
+      playMessageSound();
+    }, 2400);
+  }, 11200);
+
+  // IMPORTANTE:
+  // En USER_4471 NO bloqueamos el input.
+  // El jugador todavía puede escribir.
+  document.getElementById("chat-input").disabled = false;
+  document.getElementById("chat-send-btn").disabled = false;
+
+  return;
+}
+
+  if (chatState.profile.name === FINAL_MONSTER_NAME) {
     const typingEl = document.getElementById("chat-typing");
 
     setTimeout(() => {
