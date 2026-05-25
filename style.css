@@ -1197,3 +1197,23 @@ body.post-warning .chat-msg.them {
   100% { opacity: 1; transform: translateX(-2px); }
 
 }
+
+.screen {
+  display: none !important;
+}
+
+.screen.active {
+  display: block !important;
+}
+
+#screen-browser.active {
+  display: flex !important;
+}
+
+#screen-gameover {
+  display: none !important;
+}
+
+#screen-gameover.active {
+  display: flex !important;
+}

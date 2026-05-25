@@ -8,6 +8,7 @@ let postWarning = false;
 let swipeCount = 0;
 let popupTimer = null;
 let govShown = false;
+let capturedPlayerPhoto = null;
 
 // ── PROFILES DATA ──────────────────────────────
 // Images: 0–4 = normal → uncanny. Phase drives horror level.
@@ -96,25 +97,28 @@ const chatScripts = {
     { from: "them", text: "so uh what kind of music do you like", delay: 3000 },
     { from: "them", text: "i play guitar btw. just saying haha", delay: 5500 },
   ],
-  SARA_09: [
-    { from: "them", text: "heyyy ;)", delay: 900 },
-    {
-      from: "them",
-      text: "i saw your profile and i thought wow. just. wow.",
-      delay: 2500,
-    },
-    {
-      from: "them",
-      text: "do you ever feel like someone is watching you",
-      delay: 5000,
-    },
-    {
-      from: "them",
-      text: "i mean like. in a cute way lol",
-      delay: 6200,
-      eerie: false,
-    },
-  ],
+  "RUBIU": [
+  {
+    from: "them",
+    text: "heyyy hahahah",
+    delay: 900
+  },
+  {
+    from: "them",
+    text: "ngl your profile looked fake at first 😭",
+    delay: 2600
+  },
+  {
+    from: "them",
+    text: "this app gives me bad vibes sometimes",
+    delay: 5000
+  },
+  {
+    from: "them",
+    text: "but maybe that's just me overthinking lol",
+    delay: 6900
+  }
+],
   USER_4471: [
     { from: "them", text: "HELLO.", delay: 800 },
     {
@@ -245,7 +249,12 @@ const scriptedUserReplies = {
     "oh that's cool haha",
   ],
 
-  SARA_09: ["heyyy", "haha thank you", "wait what do you mean?", "oh lol okay"],
+  "RUBIU": [
+  "hey rubiuu",
+  "yeah my profile is actually real",
+  "okay but this site feels weird sometimes",
+  "nah it's probably nothing"
+],
 };
 
 const scriptedThemReplies = {
@@ -261,11 +270,12 @@ const scriptedThemReplies = {
     "maybe i could play something for you",
   ],
 
-  SARA_09: [
-    "you seem nervous lol",
-    "nothinggg don't worry",
-    "i just notice things",
-  ],
+  "RUBIU": [
+  "ngl your profile looked fake at first ",
+  "this app gives me bad vibes sometimes",
+  "like sometimes i feel like some accounts aren't real lol",
+  "but maybe that's just me overthinking"
+],
 };
 
 let chatState = {
@@ -840,6 +850,11 @@ function appendChatMsg(cls, text) {
 }
 
 function sendUserMessage() {
+
+  if (chatState.scriptTimer) {
+    clearTimeout(chatState.scriptTimer);
+  }
+
   const input = document.getElementById("chat-input");
   const typedText = input.value.trim();
 
@@ -864,6 +879,7 @@ function sendUserMessage() {
   const index = chatState.userReplyIndex;
 
   const finalText = userReplies[index] || userReplies[userReplies.length - 1];
+
   appendChatMsg("me", finalText);
 
   chatState.userReplyIndex++;
@@ -875,66 +891,71 @@ function sendUserMessage() {
     typingEl.classList.add("hidden");
 
     const reply = themReplies[index] || themReplies[themReplies.length - 1];
+
     const isEerie = chatState.phase >= 2;
 
     appendChatMsg("them" + (isEerie ? " eerie" : ""), reply);
+
     playMessageSound();
   }, 1200);
 }
 
 function continueChat() {
-  // Hide action row
   document.getElementById("chat-action-row").style.display = "none";
   document.getElementById("chat-input").focus();
 
-  // Phase 3 (final profiles) = game over path
   if (chatState.phase >= 3) {
     const typingEl = document.getElementById("chat-typing");
-    // Sequence: eerie final message → screen fades → game over
+
     setTimeout(() => {
       typingEl.classList.remove("hidden");
+
       setTimeout(() => {
         typingEl.classList.add("hidden");
         appendChatMsg("them eerie", "good. i was hoping you would stay.");
+        playMessageSound();
       }, 2000);
-    }, 1500);
+    }, 1000);
 
     setTimeout(() => {
       typingEl.classList.remove("hidden");
+
       setTimeout(() => {
         typingEl.classList.add("hidden");
         appendChatMsg("them eerie", "you were always going to say yes.");
+        playMessageSound();
       }, 1800);
-    }, 5000);
+    }, 4500);
 
     setTimeout(() => {
       typingEl.classList.remove("hidden");
+
       setTimeout(() => {
         typingEl.classList.add("hidden");
         appendChatMsg("them eerie", "i am already inside.");
+        playMessageSound();
 
-        setTimeout(() => {
-          revealCapturedPhoto();
-        }, 1800);
+        revealCapturedPhoto();
 
         setTimeout(() => {
           appendChatMsg("them eerie", "open");
-        }, 5000);
+          playMessageSound();
 
-        // final blackout
-        setTimeout(() => {
-          triggerGameOver();
-        }, 9000);
+          setTimeout(() => {
+            triggerGameOver();
+          }, 1800);
 
-        // Lock input
-        document.getElementById("chat-input").disabled = true;
-        document.getElementById("chat-send-btn").disabled = true;
+        }, 3500);
+
       }, 1600);
-    }, 8500);
+    }, 8000);
 
-    // Trigger game over after final message
+    document.getElementById("chat-input").disabled = true;
+    document.getElementById("chat-send-btn").disabled = true;
+
     return;
   }
+
 
   // Lower phases: just a subtle extra message
   if (chatState.phase >= 2) {
@@ -1046,11 +1067,28 @@ function triggerGameOver() {
   // Close all overlays
   if (chatState.scriptTimer) clearTimeout(chatState.scriptTimer);
   stopPopupTimer();
-  document.getElementById("chat-overlay").classList.add("hidden");
-  document.getElementById("chat-popup").classList.add("hidden");
-  document.getElementById("gov-overlay").classList.add("hidden");
-  document.getElementById("gov-popup").classList.add("hidden");
-  document.getElementById("win-popup").classList.add("hidden");
+
+  const elementsToHide = [
+    "chat-overlay",
+    "chat-popup",
+    "gov-overlay",
+    "gov-popup",
+    "gov-video-wrap",
+    "chat-toast",
+    "win-popup"
+  ];
+
+  elementsToHide.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("hidden");
+  });
+
+  // Re-enable input por si luego reinicias
+  const chatInput = document.getElementById("chat-input");
+  const chatSendBtn = document.getElementById("chat-send-btn");
+
+  if (chatInput) chatInput.disabled = false;
+  if (chatSendBtn) chatSendBtn.disabled = false;
 
   // Glitch flash sequence before reveal
   triggerGlitchFlash(200);
@@ -1061,29 +1099,34 @@ function triggerGameOver() {
   setTimeout(() => {
     showScreen("screen-gameover");
 
-    // Reset static animation by cloning the element
     const staticEl = document.getElementById("gameover-static");
-    const clone = staticEl.cloneNode(true);
-    staticEl.parentNode.replaceChild(clone, staticEl);
 
-    // Reset line animations
+    if (staticEl) {
+      const clone = staticEl.cloneNode(true);
+      staticEl.parentNode.replaceChild(clone, staticEl);
+    }
+
     ["go-line-1", "go-line-2"].forEach((id) => {
       const el = document.getElementById(id);
-      el.style.animation = "none";
-      el.offsetHeight; // reflow
-      el.style.animation = "";
+
+      if (el) {
+        el.style.animation = "none";
+        el.offsetHeight;
+        el.style.animation = "";
+      }
     });
 
-    // Show CONNECTION TERMINATED after the two main lines
     setTimeout(() => {
       const sub = document.getElementById("go-line-3");
-      sub.classList.remove("hidden");
-      sub.style.animationDelay = "0s";
+      if (sub) {
+        sub.classList.remove("hidden");
+        sub.style.animationDelay = "0s";
+      }
     }, 6500);
 
-    // Show restart button last
     setTimeout(() => {
-      document.getElementById("gameover-restart").classList.remove("hidden");
+      const restart = document.getElementById("gameover-restart");
+      if (restart) restart.classList.remove("hidden");
     }, 9000);
   }, 800);
 }
